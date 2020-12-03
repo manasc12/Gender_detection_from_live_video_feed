@@ -23,7 +23,7 @@ data = []
 labels = []
 
 # load image files from the dataset
-image_files = [f for f in glob.glob(r'C:\Files\gender_dataset_face' + "/**/*", recursive=True) if not os.path.isdir(f)]
+image_files = [f for f in glob.glob(r'C:\Users\manas\Downloads\Gender_Detection\gender_dataset_face' + "/**/*", recursive=True) if not os.path.isdir(f)]
 random.shuffle(image_files)
 
 # converting images to arrays and labelling the categories
@@ -63,38 +63,33 @@ aug = ImageDataGenerator(rotation_range=25, width_shift_range=0.1,
 def build(width, height, depth, classes):
     model = Sequential()
     inputShape = (height, width, depth)
-    chanDim = -1
-
-    if K.image_data_format() == "channels_first": #Returns a string, either 'channels_first' or 'channels_last'
-        inputShape = (depth, height, width)
-        chanDim = 1
     
     # The axis that should be normalized, after a Conv2D layer with data_format="channels_first", 
     # set axis=1 in BatchNormalization.
 
     model.add(Conv2D(32, (3,3), padding="same", input_shape=inputShape))
     model.add(Activation("relu"))
-    model.add(BatchNormalization(axis=chanDim))
+    model.add(BatchNormalization())
     model.add(MaxPooling2D(pool_size=(3,3)))
     model.add(Dropout(0.25))
 
     model.add(Conv2D(64, (3,3), padding="same"))
     model.add(Activation("relu"))
-    model.add(BatchNormalization(axis=chanDim))
+    model.add(BatchNormalization())
 
     model.add(Conv2D(64, (3,3), padding="same"))
     model.add(Activation("relu"))
-    model.add(BatchNormalization(axis=chanDim))
+    model.add(BatchNormalization())
     model.add(MaxPooling2D(pool_size=(2,2)))
     model.add(Dropout(0.25))
 
     model.add(Conv2D(128, (3,3), padding="same"))
     model.add(Activation("relu"))
-    model.add(BatchNormalization(axis=chanDim))
+    model.add(BatchNormalization())
 
     model.add(Conv2D(128, (3,3), padding="same"))
     model.add(Activation("relu"))
-    model.add(BatchNormalization(axis=chanDim))
+    model.add(BatchNormalization())
     model.add(MaxPooling2D(pool_size=(2,2)))
     model.add(Dropout(0.25))
 
